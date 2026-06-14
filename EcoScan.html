@@ -394,6 +394,11 @@
           </div>
 
           <div class="field">
+            <label for="correo">Correo Electrónico</label>
+            <input id="correo" name="correo" type="email" autocomplete="email" placeholder="ejemplo@correo.com" required />
+          </div>
+
+          <div class="field">
             <label for="edad">Edad</label>
             <input id="edad" name="edad" type="number" min="1" max="120" inputmode="numeric" required />
           </div>
@@ -434,7 +439,23 @@
     <p class="footer-note">EcoScan registra acciones de reciclaje mediante QR.</p>
   </main>
 
-  <script>
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDCj2ucOpe1Z6UakcdDwb6b09iKoQ-MgL0",
+      authDomain: "ecoscan-714c2.firebaseapp.com",
+      projectId: "ecoscan-714c2",
+      storageBucket: "ecoscan-714c2.firebasestorage.app",
+      messagingSenderId: "845058890122",
+      appId: "1:845058890122:web:36977d88908d11b462d073"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
     const form = document.getElementById("recycle-form");
     const successMessage = document.getElementById("success-message");
     const residueSelect = document.getElementById("tipoResiduo");
@@ -500,7 +521,7 @@
 
     residueSelect.addEventListener("change", updatePreview);
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       if (!form.checkValidity()) {
@@ -511,6 +532,24 @@
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
       const points = getSelectedPoints();
+
+      try {
+        await addDoc(collection(db, "registros"), {
+          nombres: data.nombres,
+          apellidos: data.apellidos,
+          correo: data.correo,
+          edad: data.edad,
+          fecha: data.fecha,
+          tipoResiduo: data.tipoResiduo,
+          puntos: points,
+          fechaRegistro: new Date()
+          });
+
+          console.log("Guardado en Firebase");
+          } catch (error) {
+            console.error("Error Firebase:", error);
+            }
+
 
       totalPoints += points;
       totalScans += 1;
