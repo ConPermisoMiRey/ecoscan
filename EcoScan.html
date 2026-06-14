@@ -436,6 +436,13 @@
       <div id="success-message" class="success-message" role="status" aria-live="polite"></div>
     </section>
 
+    <section class="panel" aria-label="Ranking EcoScan">
+    <h2>🏆 Ranking EcoScan</h2>
+    <div id="ranking-list">
+      <p>Cargando ranking...</p>
+    </div>
+    </section>
+
     <p class="footer-note">EcoScan registra acciones de reciclaje mediante QR.</p>
   </main>
 
@@ -499,6 +506,61 @@
     totalScansEl.textContent = registrosTotales;
     totalPointsEl.textContent = puntosHoy;
     }
+
+
+    async function cargarRanking() {
+
+      const snapshot = await getDocs(collection(db, "registros"));
+
+      const usuarios = {};
+
+      snapshot.forEach((doc) => {
+
+        const dato = doc.data();
+
+        const correo = dato.correo;
+
+        if (!usuarios[correo]) {
+          usuarios[correo] = {
+            nombre: `${dato.nombres} ${dato.apellidos}`,
+            puntos: 0
+            };
+        }
+
+        usuarios[correo].puntos += Number(dato.puntos || 0);
+
+      });
+
+      const ranking = Object.values(usuarios)
+      .sort((a, b) => b.puntos - a.puntos)
+      .slice(0, 10);
+
+      const rankingList = document.getElementById("ranking-list");
+
+      if (ranking.length === 0) {
+        rankingList.innerHTML = "<p>No hay registros todavía.</p>";
+        return;
+      }
+
+      rankingList.innerHTML = ranking
+      .map((usuario, index) => {
+
+        let medalla = "";
+
+        if (index === 0) medalla = "🥇";
+        else if (index === 1) medalla = "🥈";
+        else if (index === 2) medalla = "🥉";
+        else medalla = `${index + 1}.`;
+
+        return `
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ddd;">
+          <span>${medalla} ${usuario.nombre}</span>
+          <strong>${usuario.puntos} pts</strong>
+        </div>
+      ` ;
+      })
+      .join("");
+    } 
 
     function getLocalDateValue(date = new Date()) {
       const year = date.getFullYear();
@@ -574,6 +636,7 @@
           console.log("Guardado en Firebase");
 
           await cargarEstadisticas();
+          await cargarRanking();
           
           } catch (error) {
             console.error("Error Firebase:", error);
@@ -592,6 +655,7 @@
 
     updatePreview();
     cargarEstadisticas();
+    cargarRanking();
   </script>
 </body>
 </html>
