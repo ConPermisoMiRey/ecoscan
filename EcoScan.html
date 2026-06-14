@@ -550,12 +550,6 @@
             console.error("Error Firebase:", error);
             }
 
-
-      totalPoints += points;
-      totalScans += 1;
-      totalPointsEl.textContent = totalPoints;
-      totalScansEl.textContent = totalScans;
-
       renderSuccess(data, points);
 
       clearTimeout(cleanTimer);
