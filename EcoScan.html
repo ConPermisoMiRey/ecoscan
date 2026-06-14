@@ -442,7 +442,7 @@
   <script type="module">
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDCj2ucOpe1Z6UakcdDwb6b09iKoQ-MgL0",
@@ -473,6 +473,32 @@
     let totalPoints = 0;
     let totalScans = 0;
     let cleanTimer;
+
+    async function cargarEstadisticas() {
+
+    const snapshot = await getDocs(collection(db, "registros"));
+
+    let registrosTotales = 0;
+    let puntosHoy = 0;
+
+    const hoy = getLocalDateValue();
+
+    snapshot.forEach((doc) => {
+    const dato = doc.data();
+
+    registrosTotales++;
+
+    if (dato.fecha === hoy) {
+      puntosHoy += Number(dato.puntos || 0);
+      }
+      });
+      
+    totalScans = registrosTotales;
+    totalPoints = puntosHoy;
+
+    totalScansEl.textContent = registrosTotales;
+    totalPointsEl.textContent = puntosHoy;
+    }
 
     function getLocalDateValue(date = new Date()) {
       const year = date.getFullYear();
@@ -546,6 +572,9 @@
           });
 
           console.log("Guardado en Firebase");
+
+          await cargarEstadisticas();
+          
           } catch (error) {
             console.error("Error Firebase:", error);
             }
@@ -562,6 +591,7 @@
     });
 
     updatePreview();
+    cargarEstadisticas();
   </script>
 </body>
 </html>
