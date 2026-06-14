@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoScan - Bienvenido</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+
+    background:
+    radial-gradient(circle at top left,#5fd068 0%,transparent 30%),
+    radial-gradient(circle at top right,#6bd66f 0%,transparent 20%),
+    linear-gradient(135deg,#0f2027,#203a43,#2c7744);
+}
+
+/* Hojas flotantes */
+
+.leaf{
+    position:absolute;
+    font-size:2rem;
+    opacity:0.3;
+    animation:float 15s linear infinite;
+}
+
+.leaf:nth-child(1){
+    left:10%;
+    animation-duration:18s;
+}
+
+.leaf:nth-child(2){
+    left:30%;
+    animation-duration:14s;
+}
+
+.leaf:nth-child(3){
+    left:70%;
+    animation-duration:20s;
+}
+
+.leaf:nth-child(4){
+    left:90%;
+    animation-duration:16s;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(110vh) rotate(0deg);
+    }
+
+    to{
+        transform:translateY(-120px) rotate(360deg);
+    }
+}
+
+/* Tarjeta principal */
+
+.card{
+
+    width:90%;
+    max-width:700px;
+
+    padding:45px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,0.08);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:30px;
+
+    box-shadow:
+    0 0 25px rgba(0,0,0,0.25);
+
+    animation:entrada 1s ease;
+}
+
+@keyframes entrada{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.logo{
+    font-size:5rem;
+    margin-bottom:15px;
+}
+
+h1{
+    color:white;
+    font-size:4rem;
+    margin-bottom:10px;
+}
+
+.eco{
+    color:#7CFF6B;
+}
+
+.subtitulo{
+    color:#d8ffd6;
+    font-size:1.3rem;
+    margin-bottom:25px;
+}
+
+.linea{
+    width:90px;
+    height:4px;
+    background:#7CFF6B;
+    margin:20px auto 30px;
+    border-radius:20px;
+}
+
+.texto{
+    color:white;
+    line-height:1.8;
+    font-size:1.1rem;
+    margin-bottom:20px;
+}
+
+/* Botón */
+
+.boton{
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    padding:18px 45px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:1.2rem;
+
+    font-weight:600;
+
+    border-radius:50px;
+
+    background:linear-gradient(
+        45deg,
+        #55d834,
+        #8cff55
+    );
+
+    box-shadow:
+    0 10px 25px rgba(0,255,100,0.3);
+
+    transition:all .3s ease;
+}
+
+.boton:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.05);
+
+    box-shadow:
+    0 15px 35px rgba(0,255,100,0.5);
+}
+
+/* Iconos inferiores */
+
+.info{
+    margin-top:40px;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+}
+
+.item{
+    color:#dfffe0;
+}
+
+.item span{
+    display:block;
+    font-size:2rem;
+    margin-bottom:8px;
+}
+
+.footer{
+    margin-top:35px;
+    color:#dfffe0;
+    font-size:0.95rem;
+}
+
+@media(max-width:768px){
+
+    h1{
+        font-size:2.7rem;
+    }
+
+    .logo{
+        font-size:4rem;
+    }
+
+    .subtitulo{
+        font-size:1.1rem;
+    }
+
+    .texto{
+        font-size:1rem;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="leaf">🍃</div>
+<div class="leaf">🌿</div>
+<div class="leaf">🍃</div>
+<div class="leaf">🌱</div>
+
+<div class="card">
+
+```
+<div class="logo">🌎</div>
+
+<h1>
+    <span class="eco">Eco</span>Scan
+</h1>
+
+<p class="subtitulo">
+    Reciclar hoy es cuidar el mañana
+</p>
+
+<div class="linea"></div>
+
+<p class="texto">
+    Gracias por contribuir al cuidado del medio ambiente.
+    Cada material reciclado ayuda a reducir la contaminación
+    y construir un futuro más sostenible.
+</p>
+
+<p class="texto">
+    Con EcoScan podrás registrar y clasificar residuos
+    de forma rápida, sencilla y responsable.
+</p>
+
+<a href="EcoScan.html" class="boton">
+    🚀 Ingresar al Sistema
+</a>
+
+<div class="info">
+
+    <div class="item">
+        <span>♻️</span>
+        Recicla
+    </div>
+
+    <div class="item">
+        <span>🌱</span>
+        Reutiliza
+    </div>
+
+    <div class="item">
+        <span>🌍</span>
+        Reduce
+    </div>
+
+    <div class="item">
+        <span>💚</span>
+        Cuida el planeta
+    </div>
+
+</div>
+
+<div class="footer">
+    EcoScan - Juntos por un planeta más limpio
+</div>
+```
+
+</div>
+
+</body>
+</html>
