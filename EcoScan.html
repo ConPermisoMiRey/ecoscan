@@ -544,34 +544,39 @@
 
       rankingList.innerHTML = `
       <div style="
-      display:flex;
-      justify-content:space-between;
+      display:grid;
+      grid-template-columns:80px 250px 100px;
+      justify-content:center;
       font-weight:bold;
       padding:10px 0;
       border-bottom:2px solid #ccc;
       margin-bottom:8px;
       ">
+      <span>Pos.</span>
       <span>Nombre</span>
-      <span>Puntaje</span>
+      <span style="text-align:right">Puntos</span>
       </div>
       `;
 
       rankingList.innerHTML += ranking
       .map((usuario, index) => {
 
-        let medalla = "";
-
-        if (index === 0) medalla = "🥇";
-        else if (index === 1) medalla = "🥈";
-        else if (index === 2) medalla = "🥉";
-        else medalla = `${index + 1}.`;
+        let medalla = `${index + 1}°`;
 
         return `
-        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ddd;">
-          <span>${medalla} ${usuario.nombre}</span>
-          <strong>${usuario.puntos} pts</strong>
+        <div style="
+        display:grid;
+        grid-template-columns:80px 250px 100px;
+        justify-content:center;
+        align-items:center;
+        padding:8px 0;
+        border-bottom:1px solid #ddd;
+        ">
+        <span>${medalla}</span>
+        <span>${usuario.nombre}</span>
+        <strong style="text-align:right">${usuario.puntos} pts</strong>
         </div>
-      ` ;
+        `;
       })
       .join("");
     } 
