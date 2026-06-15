@@ -542,7 +542,21 @@
         return;
       }
 
-      rankingList.innerHTML = ranking
+      rankingList.innerHTML = `
+      <div style="
+      display:flex;
+      justify-content:space-between;
+      font-weight:bold;
+      padding:10px 0;
+      border-bottom:2px solid #ccc;
+      margin-bottom:8px;
+      ">
+      <span>Nombre</span>
+      <span>Puntaje</span>
+      </div>
+      `;
+
+      rankingList.innerHTML += ranking
       .map((usuario, index) => {
 
         let medalla = "";
